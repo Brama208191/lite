@@ -1,0 +1,81 @@
+ Container keel-lite-postgres-1 Running 
+ Container keel-lite-api-1 Running 
+ Container keel-lite-receiver-1 Running 
+ Container keel-lite-postgres-1 Waiting 
+ Container keel-lite-postgres-1 Waiting 
+ Container keel-lite-postgres-1 Healthy 
+ Container keel-lite-postgres-1 Healthy 
+ Container keel-lite-chaos-run-e086776fa2b5 Creating 
+ Container keel-lite-chaos-run-e086776fa2b5 Created 
+[chaos] session y2ea9i seed 42: 30 SIGKILL + 3 SIGSTOP trials, 5 workers x 8 runs, lease ttl PT2S, stable keys false
+[chaos] trial 25/33, 5 workers alive, 0 halts injected
+[chaos] trial 33/33, 5 workers alive, 0 halts injected
+[chaos] trials done in 44s, draining
+# Keel Lite chaos report
+
+**Result: NOT clean.** Fake model only, no LLM calls. Session `y2ea9i`, seed `42`, generated 2026-11-01T16:49:52.914526024Z.
+
+| Metric | Value |
+|---|---|
+| `kill -9` trials (SIGKILL on a worker holding live leases) | 30 |
+| Zombie trials (SIGSTOP past the lease TTL, then SIGCONT) | 3 |
+| Injected halts right after an effect, before it was recorded | 0 |
+| Runs interrupted mid-flight | 119 |
+| Runs completed | 171 / 171 |
+| **Duplicate side effects, counted at the receiver** | **28** |
+| Missing side effects | 0 |
+| Retries absorbed by idempotency keys | 3 |
+| Takeover after interruption, p50 / p95 / p99 | 2.03 s / 2.15 s / 2.29 s (max 2.30 s) |
+| First new event after interruption, p50 / p95 / p99 | 2.19 s / 4.21 s / 4.41 s (max 4.48 s) |
+| Zombie writes rejected by fencing | 15 |
+
+## Setup
+
+5 worker JVMs x 8 concurrent runs, 12 runs kept in flight, lease TTL 2000 ms, heartbeat 500 ms, stable idempotency keys: false, halt-after-effect rate 0.005. Wall time 47 s.
+
+Every run logs a note (transactional tool), sends an email and charges a card (external effects). The receiver is a separate service; it dedupes by `Idempotency-Key` like Stripe does and counts business-level duplicates by order reference, independent of keys.
+
+## Side effects at the receiver
+
+| | |
+|---|---|
+| Requests received | 373 |
+| Effects applied | 370 (expected 342) |
+| Requests answered from the key ledger (replays) | 3 |
+| Key reused with a different payload | 0 |
+| Duplicate effects (same order, more than once) | 28 e.g. charge ORD-y2ea9i-128 x2; charge ORD-y2ea9i-137 x2; charge ORD-y2ea9i-146 x2; charge ORD-y2ea9i-15 x2; charge ORD-y2ea9i-159 x3 |
+| Notes lines (transactional tool) / duplicates / missing | 171 / 0 / 0 |
+
+## Event log integrity
+
+| | |
+|---|---|
+| Writes with a stale lease token | 0 |
+| Runs with a gap in `seq` | 0 |
+| Model turns recorded twice | 0 |
+| Tool results recorded twice | 0 |
+| Tool calls re-sent after a crash (same key) | 28 |
+| Model calls made / responses recorded | 588 / 513 (75 lost to crashes; a resumed run reuses every recorded response) |
+
+## Where the interruptions landed
+
+Last event in the log when the worker died or froze:
+
+| Last event | What was in flight | Runs |
+|---|---|---|
+| LEASE_ACQUIRED | rebuilding state, then a model call or a tool call | 58 |
+| MODEL_RESPONDED | about to record a tool start | 2 |
+| TOOL_COMPLETED | the next tool call or model call | 31 |
+| TOOL_STARTED | a tool call: the effect may have happened but is not recorded | 28 |
+
+## Takeover time by trial type
+
+| | p50 / p95 / p99 |
+|---|---|
+| SIGKILL | 2.02 s / 2.15 s / 2.30 s (max 2.30 s) |
+| SIGSTOP | 2.04 s / 2.10 s / 2.10 s (max 2.10 s) |
+
+12 interruption(s) are left out of the takeover times because the worker that claimed the run was itself killed before it wrote anything; that run's next takeover is measured from the second interruption.
+
+Takeover is bounded by the lease TTL: a dead worker stops renewing, its lease expires, and the next poll claims the run with a higher fencing token.
+

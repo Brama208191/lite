@@ -1,0 +1,62 @@
+spring:
+  application:
+    name: keel
+  datasource:
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:keel}
+    username: ${PGUSER:keel}
+    password: ${PGPASSWORD:keel}
+    hikari:
+      maximum-pool-size: ${KEEL_DB_POOL:10}
+  threads:
+    virtual:
+      enabled: true
+  mvc:
+    async:
+      request-timeout: -1
+
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+keel:
+  role: ${KEEL_ROLE:all}
+  worker:
+    id: ${KEEL_WORKER_ID:}
+    concurrency: ${KEEL_WORKER_CONCURRENCY:8}
+    lease-ttl: ${KEEL_LEASE_TTL:3s}
+    heartbeat-interval: ${KEEL_HEARTBEAT_INTERVAL:500ms}
+  idempotency:
+    stable-keys: ${KEEL_STABLE_KEYS:true}
+  chaos:
+    halt-after-effect-rate: ${KEEL_HALT_AFTER_EFFECT_RATE:0}
+  model:
+    fake:
+      min-latency: ${KEEL_FAKE_MIN_LATENCY:50ms}
+      max-latency: ${KEEL_FAKE_MAX_LATENCY:200ms}
+    anthropic:
+      api-key: ${ANTHROPIC_API_KEY:}
+      model: ${KEEL_ANTHROPIC_MODEL:claude-opus-5-5}
+      effort: ${KEEL_ANTHROPIC_EFFORT:low}
+      fallbacks: ${KEEL_ANTHROPIC_FALLBACKS:true}
+  receiver:
+    url: ${KEEL_RECEIVER_URL:http://localhost:8090}
+  api:
+    max-runs-per-minute: ${KEEL_MAX_RUNS_PER_MINUTE:60}
+    max-anthropic-runs-per-hour: ${KEEL_MAX_ANTHROPIC_RUNS_PER_HOUR:20}
+
+logging:
+  level:
+    keel: INFO
+    keel.model: INFO

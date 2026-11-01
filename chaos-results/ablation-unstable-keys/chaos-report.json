@@ -1,0 +1,103 @@
+{
+  "generatedAt" : 1793551792.910337625,
+  "session" : "y2ea9i",
+  "seed" : 42,
+  "config" : {
+    "workerConcurrency" : 8,
+    "pauseTrials" : 3,
+    "haltAfterEffectRate" : 0.005,
+    "killTrials" : 30,
+    "inflight" : 12,
+    "workers" : 5,
+    "stableKeys" : false,
+    "leaseTtlMs" : 2000,
+    "model" : "fake"
+  },
+  "clean" : false,
+  "wallSeconds" : 47,
+  "runs" : {
+    "completed" : 171,
+    "total" : 171,
+    "failed" : 0,
+    "unfinished" : 0
+  },
+  "interruptions" : {
+    "haltsAfterEffect" : 0,
+    "pausedRunsContinuedByTheirOwner" : 0,
+    "takeoversCutShortByAnotherInterruption" : 12,
+    "sigstop" : 3,
+    "notResumed" : 0,
+    "sigkill" : 30,
+    "killedRunsFinishedByAnInFlightCommit" : 0,
+    "lastEventBeforeInterruption" : {
+      "LEASE_ACQUIRED" : 58,
+      "MODEL_RESPONDED" : 2,
+      "TOOL_COMPLETED" : 31,
+      "TOOL_STARTED" : 28
+    },
+    "interruptedRuns" : 119,
+    "workersReplacedAfterHalt" : 0
+  },
+  "takeoverMs" : {
+    "all" : {
+      "samples" : 107,
+      "p50" : 2026,
+      "p95" : 2154,
+      "p99" : 2294,
+      "max" : 2295
+    },
+    "sigkill" : {
+      "samples" : 97,
+      "p50" : 2021,
+      "p95" : 2154,
+      "p99" : 2295,
+      "max" : 2295
+    },
+    "sigstop" : {
+      "samples" : 10,
+      "p50" : 2036,
+      "p95" : 2103,
+      "p99" : 2103,
+      "max" : 2103
+    }
+  },
+  "firstProgressMs" : {
+    "samples" : 107,
+    "p50" : 2190,
+    "p95" : 4210,
+    "p99" : 4408,
+    "max" : 4476
+  },
+  "receiver" : {
+    "duplicateSamples" : [ "charge ORD-y2ea9i-128 x2", "charge ORD-y2ea9i-137 x2", "charge ORD-y2ea9i-146 x2", "charge ORD-y2ea9i-15 x2", "charge ORD-y2ea9i-159 x3" ],
+    "replayedByKey" : 3,
+    "expectedEffects" : 342,
+    "effects" : 370,
+    "keyConflicts" : 0,
+    "applied" : 370,
+    "duplicateEffects" : 28,
+    "missingEffects" : 0,
+    "requests" : 373
+  },
+  "notes" : {
+    "duplicates" : 0,
+    "missing" : 0,
+    "lines" : 171
+  },
+  "eventLog" : {
+    "seqGaps" : 0,
+    "duplicateModelTurns" : 0,
+    "toolReExecutions" : 28,
+    "duplicateToolResults" : 0,
+    "staleTokenWrites" : 0
+  },
+  "zombies" : {
+    "leasesLost" : 0,
+    "fencedWrites" : 15
+  },
+  "model" : {
+    "callsLostToCrashes" : 75,
+    "callsMade" : 588,
+    "responsesRecorded" : 513
+  }
+}

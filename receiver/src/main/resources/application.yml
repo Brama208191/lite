@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: keel-receiver
+  datasource:
+    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:keel}?currentSchema=receiver
+    username: ${PGUSER:keel}
+    password: ${PGPASSWORD:keel}
+    hikari:
+      maximum-pool-size: ${RECEIVER_DB_POOL:10}
+  flyway:
+    locations: classpath:db/receiver
+    schemas: receiver
+    default-schema: receiver
+    create-schemas: true
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: ${PORT:8090}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+receiver:
+  min-latency: ${RECEIVER_MIN_LATENCY:20ms}
+  max-latency: ${RECEIVER_MAX_LATENCY:120ms}
+  fail-after-commit-rate: ${RECEIVER_FAIL_AFTER_COMMIT_RATE:0}

@@ -1,0 +1,101 @@
+x-db: &db
+  PGHOST: postgres
+  PGPORT: "5432"
+  PGDATABASE: keel
+  PGUSER: keel
+  PGPASSWORD: keel
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: keel
+      POSTGRES_USER: keel
+      POSTGRES_PASSWORD: keel
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U keel -d keel"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+  receiver:
+    build:
+      context: .
+      dockerfile: deploy/receiver.Dockerfile
+    environment:
+      <<: *db
+      RECEIVER_MIN_LATENCY: ${RECEIVER_MIN_LATENCY:-40ms}
+      RECEIVER_MAX_LATENCY: ${RECEIVER_MAX_LATENCY:-160ms}
+      RECEIVER_FAIL_AFTER_COMMIT_RATE: ${RECEIVER_FAIL_AFTER_COMMIT_RATE:-0.02}
+    ports:
+      - "8090:8090"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    build:
+      context: .
+      dockerfile: deploy/runtime.Dockerfile
+    image: keel-runtime
+    environment:
+      <<: *db
+      KEEL_ROLE: api
+      KEEL_RECEIVER_URL: http://receiver:8090
+      KEEL_LEASE_TTL: ${KEEL_LEASE_TTL:-3s}
+      KEEL_MAX_RUNS_PER_MINUTE: ${KEEL_MAX_RUNS_PER_MINUTE:-100000}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      KEEL_ANTHROPIC_MODEL: ${KEEL_ANTHROPIC_MODEL:-claude-opus-5-5}
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  worker:
+    image: keel-runtime
+    environment:
+      <<: *db
+      KEEL_ROLE: worker
+      SPRING_MAIN_WEB_APPLICATION_TYPE: none
+      KEEL_RECEIVER_URL: http://receiver:8090
+      KEEL_LEASE_TTL: ${KEEL_LEASE_TTL:-3s}
+      KEEL_FAKE_MIN_LATENCY: ${KEEL_FAKE_MIN_LATENCY:-1500ms}
+      KEEL_FAKE_MAX_LATENCY: ${KEEL_FAKE_MAX_LATENCY:-2500ms}
+      KEEL_DB_POOL: "5"
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      KEEL_ANTHROPIC_MODEL: ${KEEL_ANTHROPIC_MODEL:-claude-opus-5-5}
+    deploy:
+      replicas: 2
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+
+  chaos:
+    profiles: ["chaos"]
+    build:
+      context: .
+      dockerfile: deploy/chaos.Dockerfile
+    environment:
+      <<: *db
+      API_URL: http://api:8080
+      KEEL_RECEIVER_URL: http://receiver:8090
+      TRIALS: ${TRIALS:-50}
+      PAUSE_TRIALS: ${PAUSE_TRIALS:-5}
+      WORKERS: ${WORKERS:-5}
+      INFLIGHT: ${INFLIGHT:-12}
+      KEEL_LEASE_TTL: ${CHAOS_LEASE_TTL:-2s}
+      KEEL_STABLE_KEYS: ${KEEL_STABLE_KEYS:-true}
+      KEEL_HALT_AFTER_EFFECT_RATE: ${KEEL_HALT_AFTER_EFFECT_RATE:-0.005}
+      KEEL_WORKER_CONCURRENCY: ${CHAOS_WORKER_CONCURRENCY:-8}
+      SEED: ${SEED:-}
+    volumes:
+      - ./chaos-results:/out
+    depends_on:
+      api:
+        condition: service_started
+      receiver:
+        condition: service_started

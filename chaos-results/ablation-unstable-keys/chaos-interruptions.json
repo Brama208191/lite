@@ -1,0 +1,1084 @@
+[ {
+  "trial" : 1,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-5",
+  "run" : "697a0c6d-0eb8-4e50-9570-a62933deddde",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:06.406301Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:08.293497Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "a845eae3-97e1-4334-ab5b-2f3365320b09",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.463345Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "c98397f9-ed25-4519-9edd-ca8420aa65f2",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.463371Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "0e3f6976-e9f6-4bcc-9b98-9073aa3af904",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.330019Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "da5dd913-97fe-4d7c-9635-5f556f9c240e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.463484Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "91f5b0be-b014-4681-b454-d85d80e54dad",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.331018Z"
+}, {
+  "trial" : 2,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-3",
+  "run" : "3a7485ee-8b5c-4df6-9ddf-36bff23b712a",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:07.308679Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:09.463345Z"
+}, {
+  "trial" : 3,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-4",
+  "run" : "697a0c6d-0eb8-4e50-9570-a62933deddde",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:08.430977Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:10.490966Z"
+}, {
+  "trial" : 4,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-1",
+  "run" : "0e3f6976-e9f6-4bcc-9b98-9073aa3af904",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:09.619715Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:11.590965Z"
+}, {
+  "trial" : 4,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-1",
+  "run" : "91f5b0be-b014-4681-b454-d85d80e54dad",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:09.619715Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:11.601156Z"
+}, {
+  "trial" : 4,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-1",
+  "run" : "7d5f25fe-28b7-414c-adc3-4f22116bff53",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:09.619715Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:11.601282Z"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "697a0c6d-0eb8-4e50-9570-a62933deddde",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:14.843277Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "7fc6b0e2-29fa-4f25-ae0c-fddc06481a33",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822076Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "cc36ae5d-0ff1-4f42-b7aa-0a4febe06aca",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822237Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "81613d37-3641-44ba-89c1-266d14cc5127",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822544Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "0dcac2e0-77d4-428d-b63d-8e314872b54b",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.836115Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "39d75a13-8f6c-41c1-8a24-38d889edeadd",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.835717Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "63a05d3f-6f7b-4b9e-ab8f-fbac0f2ff362",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822076Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 5,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-2",
+  "run" : "393f424b-b015-4a6d-b02c-12aa3e2c82b3",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:10.740052Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.835132Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 6,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-6",
+  "run" : "0e3f6976-e9f6-4bcc-9b98-9073aa3af904",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:12.046988Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:14.121540Z"
+}, {
+  "trial" : 6,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-6",
+  "run" : "91f5b0be-b014-4681-b454-d85d80e54dad",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:12.046988Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:14.122132Z"
+}, {
+  "trial" : 6,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-6",
+  "run" : "7d5f25fe-28b7-414c-adc3-4f22116bff53",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.046988Z",
+  "lastEvent" : "MODEL_RESPONDED",
+  "resumedAt" : "2026-11-01T16:49:14.121539Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "697a0c6d-0eb8-4e50-9570-a62933deddde",
+  "token" : 4,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:14.843277Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "7fc6b0e2-29fa-4f25-ae0c-fddc06481a33",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822076Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "cc36ae5d-0ff1-4f42-b7aa-0a4febe06aca",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822237Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "81613d37-3641-44ba-89c1-266d14cc5127",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822544Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "0dcac2e0-77d4-428d-b63d-8e314872b54b",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.836115Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "39d75a13-8f6c-41c1-8a24-38d889edeadd",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.835717Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "63a05d3f-6f7b-4b9e-ab8f-fbac0f2ff362",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.822076Z"
+}, {
+  "trial" : 7,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-8",
+  "run" : "393f424b-b015-4a6d-b02c-12aa3e2c82b3",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:12.814419Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:14.835132Z"
+}, {
+  "trial" : 8,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-7",
+  "run" : "f635db08-72af-4b4a-bb43-e93526ad00ce",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:13.905722Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:15.891531Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "7fc6b0e2-29fa-4f25-ae0c-fddc06481a33",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:17.557676Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "cc36ae5d-0ff1-4f42-b7aa-0a4febe06aca",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:17.572898Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "81613d37-3641-44ba-89c1-266d14cc5127",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:17.572838Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "0dcac2e0-77d4-428d-b63d-8e314872b54b",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:17.557745Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "39d75a13-8f6c-41c1-8a24-38d889edeadd",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:17.557736Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "63a05d3f-6f7b-4b9e-ab8f-fbac0f2ff362",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:17.557756Z"
+}, {
+  "trial" : 9,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-10",
+  "run" : "393f424b-b015-4a6d-b02c-12aa3e2c82b3",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:15.451608Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:17.571227Z"
+}, {
+  "trial" : 10,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-9",
+  "run" : "212e485b-7d53-4219-bcd9-316750602b2d",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:16.531431Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:18.674241Z"
+}, {
+  "trial" : 10,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-9",
+  "run" : "42268baf-67c8-4c1c-aee9-25a309ba4b69",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:16.531431Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:18.676075Z"
+}, {
+  "trial" : 10,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-9",
+  "run" : "346c5ddd-d64e-48d9-b8eb-88b0e546bde9",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:16.531431Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:18.686386Z"
+}, {
+  "trial" : 11,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-11",
+  "run" : "88a4ff30-e802-4eda-946a-fd6ea5e02b3f",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:17.219650Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:19.294474Z"
+}, {
+  "trial" : 12,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-12",
+  "run" : "d1c6d23e-245b-4243-95a0-3f0b81c51922",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:18.392922Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:20.412676Z"
+}, {
+  "trial" : 12,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-12",
+  "run" : "b087f0b5-6287-476c-8250-77f7b6f92f40",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:18.392922Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:20.412875Z"
+}, {
+  "trial" : 12,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-12",
+  "run" : "c4d44297-093a-4a76-aa31-605f01d60081",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:18.392922Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:20.412756Z"
+}, {
+  "trial" : 12,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-12",
+  "run" : "57d9f3cb-6674-47ce-8a46-afc2a86fc93f",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:18.392922Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:20.424309Z"
+}, {
+  "trial" : 12,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-12",
+  "run" : "1c26c471-e59c-4e07-9d7a-87927ba82438",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:18.392922Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:20.412781Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "37bbd1c0-842a-4de1-b78f-84f2e719ac10",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:21.613780Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "3148ee02-fd9a-4516-9dbf-d0b65df2a243",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:21.613078Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "88a4ff30-e802-4eda-946a-fd6ea5e02b3f",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:21.608932Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "212e485b-7d53-4219-bcd9-316750602b2d",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:21.547076Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "8b82d64b-721d-4bb4-b01e-c42ba8757ff6",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:21.407064Z"
+}, {
+  "trial" : 13,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-13",
+  "run" : "432f321c-d484-470a-a10b-354b1d75a36b",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:19.510266Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:21.609919Z"
+}, {
+  "trial" : 14,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-15",
+  "run" : "8297cfa3-53c9-4ddb-a675-f30db37bd033",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:23.594230Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:25.653144Z"
+}, {
+  "trial" : 15,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-16",
+  "run" : "66a75c42-1649-4cb1-b087-09ec47b43187",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:24.538891Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:26.487417Z"
+}, {
+  "trial" : 16,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-14",
+  "run" : "8297cfa3-53c9-4ddb-a675-f30db37bd033",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:25.787154Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:27.792663Z"
+}, {
+  "trial" : 17,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-17",
+  "run" : "66a75c42-1649-4cb1-b087-09ec47b43187",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:26.695219Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:28.679864Z"
+}, {
+  "trial" : 17,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-17",
+  "run" : "0e7745a9-f5e8-467d-9e5e-f569c5323e96",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:26.695219Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:28.703399Z"
+}, {
+  "trial" : 18,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-13",
+  "run" : "1b89c5b3-b52b-46d3-92ed-25b800379720",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:30.652190Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:32.608729Z"
+}, {
+  "trial" : 18,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-13",
+  "run" : "31bc0c60-3e6b-499f-8726-e1b9821b404b",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:30.652190Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:32.603236Z"
+}, {
+  "trial" : 18,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-13",
+  "run" : "2eeb050b-52fd-44ce-8c59-5ef940818948",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:30.652190Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:32.600242Z"
+}, {
+  "trial" : 18,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-13",
+  "run" : "656f2199-bd76-4aae-8b65-01dbba80319b",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:30.652190Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:32.615840Z"
+}, {
+  "trial" : 19,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-17",
+  "run" : "6e471966-b6f2-49c7-878d-f583eb48b75b",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:32.058694Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:34.029715Z"
+}, {
+  "trial" : 19,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-17",
+  "run" : "b65a5bed-c8b7-468c-9f65-28039c02a29c",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:32.058694Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:34.032774Z"
+}, {
+  "trial" : 19,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-17",
+  "run" : "689f7340-432d-42c2-b56e-a9cab52a76f4",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:32.058694Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:34.035388Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "a742d185-3a35-4189-9837-2b68f04a1ce2",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:35.446073Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "54e55a36-56b8-4074-8367-81cd08f0a03a",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:35.447309Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "527f2d5c-1433-4f92-9c46-3ce49e132d12",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:35.452003Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "54159218-1bec-4e09-a9c2-1440daf50924",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:35.449328Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "3f45d4ad-ab03-4fcb-85f0-15501d8ec30e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:35.818103Z"
+}, {
+  "trial" : 20,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-19",
+  "run" : "4355d4c7-4392-424a-9feb-cff166edc6be",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:33.523053Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:35.817885Z"
+}, {
+  "trial" : 21,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-18",
+  "run" : "b6bbf16b-16f0-4a35-86f1-17878d37c1fa",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:34.095083Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:36.116017Z"
+}, {
+  "trial" : 21,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-18",
+  "run" : "32fa7239-0b59-4015-a696-dfb72d9f7904",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:34.095083Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:36.113186Z"
+}, {
+  "trial" : 21,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-18",
+  "run" : "b24eb9ce-d60f-4054-8f58-b4dbeb93dfb3",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:34.095083Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:36.108078Z"
+}, {
+  "trial" : 22,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-20",
+  "run" : "a742d185-3a35-4189-9837-2b68f04a1ce2",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:35.626869Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:37.533067Z"
+}, {
+  "trial" : 22,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-20",
+  "run" : "54159218-1bec-4e09-a9c2-1440daf50924",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:35.626869Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:37.747061Z"
+}, {
+  "trial" : 22,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-20",
+  "run" : "527f2d5c-1433-4f92-9c46-3ce49e132d12",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:35.626869Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:37.533107Z"
+}, {
+  "trial" : 22,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-20",
+  "run" : "54e55a36-56b8-4074-8367-81cd08f0a03a",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:35.626869Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:37.744378Z"
+}, {
+  "trial" : 23,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-21",
+  "run" : "4ed609ae-62a0-4d0a-ab20-68641e4b858c",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:36.591019Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.628792Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 23,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-21",
+  "run" : "3f45d4ad-ab03-4fcb-85f0-15501d8ec30e",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:36.591019Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.681792Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 23,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-21",
+  "run" : "cada4d79-07c7-4e98-9d8b-00241cadcbfb",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:36.591019Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:38.735758Z"
+}, {
+  "trial" : 23,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-21",
+  "run" : "56dbae5a-b808-46bc-b541-b2e2e287646d",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:36.591019Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:38.737713Z"
+}, {
+  "trial" : 24,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-22",
+  "run" : "4639f7f9-de32-4b3f-8bb6-d4ebe4c2ddc0",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:37.312045Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:39.352504Z"
+}, {
+  "trial" : 24,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-22",
+  "run" : "bf3f923c-87d1-40f6-a5b2-7fcfdd283ce3",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:37.312045Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:39.362150Z"
+}, {
+  "trial" : 24,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-22",
+  "run" : "9894aed2-96a9-4e9c-b0c7-90f43c6127ee",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:37.312045Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:39.351778Z"
+}, {
+  "trial" : 24,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-22",
+  "run" : "281de0a0-655b-45ae-9ad6-48c78bc09ebc",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:37.312045Z",
+  "lastEvent" : "MODEL_RESPONDED",
+  "resumedAt" : "2026-11-01T16:49:39.348476Z"
+}, {
+  "trial" : 25,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-24",
+  "run" : "4ed609ae-62a0-4d0a-ab20-68641e4b858c",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:38.573570Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.628792Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 25,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-24",
+  "run" : "3f45d4ad-ab03-4fcb-85f0-15501d8ec30e",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:38.573570Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.681792Z",
+  "outcome" : "re-interrupted before the new owner wrote"
+}, {
+  "trial" : 26,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-23",
+  "run" : "6efbae44-d5cb-40da-a667-f10a4d0deb8d",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:39.735638Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:41.716786Z"
+}, {
+  "trial" : 26,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-23",
+  "run" : "4ab1f3b6-b2e1-4e83-aa68-84a49a00cc28",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:39.735638Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:41.716879Z"
+}, {
+  "trial" : 26,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-23",
+  "run" : "9894aed2-96a9-4e9c-b0c7-90f43c6127ee",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:39.735638Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:41.740127Z"
+}, {
+  "trial" : 26,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-23",
+  "run" : "281de0a0-655b-45ae-9ad6-48c78bc09ebc",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:39.735638Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:41.739763Z"
+}, {
+  "trial" : 26,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-23",
+  "run" : "4639f7f9-de32-4b3f-8bb6-d4ebe4c2ddc0",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:39.735638Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:41.710148Z"
+}, {
+  "trial" : 27,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-26",
+  "run" : "4ed609ae-62a0-4d0a-ab20-68641e4b858c",
+  "token" : 3,
+  "at" : "2026-11-01T16:49:40.593626Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.628792Z"
+}, {
+  "trial" : 27,
+  "kind" : "SIGSTOP",
+  "worker" : "w-y2ea9i-26",
+  "run" : "3f45d4ad-ab03-4fcb-85f0-15501d8ec30e",
+  "token" : 4,
+  "at" : "2026-11-01T16:49:40.593626Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:42.681792Z"
+}, {
+  "trial" : 28,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-25",
+  "run" : "b69bd130-721f-433c-a3be-8b10b845e13d",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:44.688209Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:46.733522Z"
+}, {
+  "trial" : 28,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-25",
+  "run" : "1938a9cf-58a2-4351-89ad-6ef9dacd001e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:44.688209Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:46.733523Z"
+}, {
+  "trial" : 28,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-25",
+  "run" : "00a22240-73c8-48c2-8f1d-bfdce29f5566",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:44.688209Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:46.734654Z"
+}, {
+  "trial" : 28,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-25",
+  "run" : "bacbcbde-3053-41d9-92f2-f79ed4d9cb57",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:44.688209Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:46.734392Z"
+}, {
+  "trial" : 29,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-27",
+  "run" : "b86ce48d-2a9f-4ae1-9721-c9a287653e4e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:45.921163Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:47.950516Z"
+}, {
+  "trial" : 29,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-27",
+  "run" : "d25f2915-43a7-4045-893c-0dc28845fe31",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:45.921163Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:47.951679Z"
+}, {
+  "trial" : 29,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-27",
+  "run" : "5a4ea0e0-8234-4bfc-abd5-377a63111966",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:45.921163Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:47.953699Z"
+}, {
+  "trial" : 29,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-27",
+  "run" : "5696dad6-f782-447d-94cc-b037fca55d42",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:45.921163Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:47.947695Z"
+}, {
+  "trial" : 30,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-28",
+  "run" : "1c0ed984-b309-4f34-b7f0-8bb6464dd43e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:46.390145Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:48.343917Z"
+}, {
+  "trial" : 30,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-28",
+  "run" : "57607068-e7c7-46ff-9a46-cc3a699ea080",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:46.390145Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:48.343917Z"
+}, {
+  "trial" : 30,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-28",
+  "run" : "e1b98daf-9dba-4969-b71c-daeb0d702bae",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:46.390145Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:48.369800Z"
+}, {
+  "trial" : 30,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-28",
+  "run" : "6bd173d5-598a-49f8-935f-55952f83c90e",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:46.390145Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:48.366409Z"
+}, {
+  "trial" : 31,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-26",
+  "run" : "56f488f4-f7f7-455d-8e3f-b889c697cf45",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:48.010141Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:50.131897Z"
+}, {
+  "trial" : 31,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-26",
+  "run" : "5696dad6-f782-447d-94cc-b037fca55d42",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.010141Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:50.131611Z"
+}, {
+  "trial" : 31,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-26",
+  "run" : "b86ce48d-2a9f-4ae1-9721-c9a287653e4e",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.010141Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:50.131604Z"
+}, {
+  "trial" : 31,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-26",
+  "run" : "5a4ea0e0-8234-4bfc-abd5-377a63111966",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.010141Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:50.131867Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "12b0c73b-8d0b-4dac-8397-bde4c26e7110",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:50.441520Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "23f28224-b9c0-40d6-8ffe-2cfba09255e6",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:50.438286Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "e1b98daf-9dba-4969-b71c-daeb0d702bae",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:50.620971Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "d25f2915-43a7-4045-893c-0dc28845fe31",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:50.620896Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "5daa7450-da0a-47d0-be01-eaf77e20b3e7",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_COMPLETED",
+  "resumedAt" : "2026-11-01T16:49:50.620885Z"
+}, {
+  "trial" : 32,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-29",
+  "run" : "6bd173d5-598a-49f8-935f-55952f83c90e",
+  "token" : 2,
+  "at" : "2026-11-01T16:49:48.551568Z",
+  "lastEvent" : "TOOL_STARTED",
+  "resumedAt" : "2026-11-01T16:49:50.435095Z"
+}, {
+  "trial" : 33,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-30",
+  "run" : "d8089d92-fd38-4b85-b29d-ad58a557ecfd",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:49.764310Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:51.767614Z"
+}, {
+  "trial" : 33,
+  "kind" : "SIGKILL",
+  "worker" : "w-y2ea9i-30",
+  "run" : "16611015-51cb-4935-bfcb-383d17f96031",
+  "token" : 1,
+  "at" : "2026-11-01T16:49:49.764310Z",
+  "lastEvent" : "LEASE_ACQUIRED",
+  "resumedAt" : "2026-11-01T16:49:51.769648Z"
+} ]

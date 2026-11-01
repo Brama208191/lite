@@ -1,0 +1,8 @@
+target/
+node_modules/
+web/dist/
+chaos-results/**/logs/
+.env
+.idea/
+*.iml
+.cache/
