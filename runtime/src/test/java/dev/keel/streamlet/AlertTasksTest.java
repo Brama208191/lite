@@ -56,7 +56,9 @@ class AlertTasksTest {
         });
 
         var second = scriptTurn(task, 1);
-        assertThat(second).extracting(Block.ToolUse::name).containsExactly("send_email", "place_trade");
+        assertThat(second).extracting(Block.ToolUse::name).containsExactly("page_oncall", "place_trade");
+        assertThat(second.get(0).input().get("severity").asText()).isEqualTo("critical");
+        assertThat(second.get(0).input().get("summary").asText()).startsWith("[ALT-BTC-1793555460] BTC/USD fell 5.20%");
         var trade = second.get(1).input();
         assertThat(trade.get("side").asText()).isEqualTo("buy");
         assertThat(trade.get("symbol").asText()).isEqualTo("BTC/USD");
@@ -65,10 +67,20 @@ class AlertTasksTest {
     }
 
     @Test
-    void incidentsGetLoggedAndEmailedWithoutATrade() {
+    void incidentsPageAsCriticalWithoutATrade() {
         var task = AlertTasks.engineDown(1_793_555_502_000L, "http://streamlet").task();
         assertThat(task).startsWith("ALERT INC-1793555502: the Streamlet engine went down at");
-        assertThat(scriptTurn(task, 1)).extracting(Block.ToolUse::name).containsExactly("send_email");
+        var page = scriptTurn(task, 1);
+        assertThat(page).extracting(Block.ToolUse::name).containsExactly("page_oncall");
+        assertThat(page.getFirst().input().get("severity").asText()).isEqualTo("critical");
+    }
+
+    @Test
+    void aSmallSpikePagesAsAWarning() {
+        var task = AlertTasks.spike(spike(180), 300, "http://streamlet", false).task();
+        var page = scriptTurn(task, 1);
+        assertThat(page).extracting(Block.ToolUse::name).containsExactly("page_oncall");
+        assertThat(page.getFirst().input().get("severity").asText()).isEqualTo("warning");
     }
 
     private static List<Block.ToolUse> scriptTurn(String task, int turn) {

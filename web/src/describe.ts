@@ -26,6 +26,8 @@ export function describeCall(name: string, input: Input): string {
       return `Read the ${input.key} notes`;
     case "http_fetch":
       return `Fetch ${host(input.url)}`;
+    case "page_oncall":
+      return `Page the on-call team (${input.severity}): “${input.summary}”`;
     case "place_trade":
       return `${input.side === "sell" ? "Sell" : "Buy"} ${money(input.notional_cents, "usd")} of ${input.symbol} (paper trade) for ${input.reference}`;
     default:
@@ -47,6 +49,8 @@ export function describeStart(name: string): string {
       return "Fetching the page";
     case "place_trade":
       return "Placing the trade";
+    case "page_oncall":
+      return "Paging the on-call team";
     default:
       return `Running ${name.replace(/_/g, " ")}`;
   }
@@ -65,6 +69,9 @@ export function describeResult(name: string | undefined, content: string, isErro
   if (parsed && typeof parsed === "object") {
     if (name === "charge_payment" || parsed.id?.startsWith?.("ch_")) {
       return `Card charged ${money(parsed.amount_cents, parsed.currency)}, receipt ${parsed.id}`;
+    }
+    if (name === "page_oncall" || parsed.id?.startsWith?.("in_")) {
+      return `Incident ${parsed.id} opened (${parsed.severity}), paged ${parsed.paged}`;
     }
     if (name === "place_trade" || parsed.id?.startsWith?.("tr_")) {
       return `Paper trade filled: ${parsed.side} ${money(parsed.notional_cents, "usd")} of ${parsed.symbol}, ticket ${parsed.id}`;

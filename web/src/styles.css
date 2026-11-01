@@ -159,6 +159,8 @@ details summary { cursor: pointer; color: var(--chalk-faint); font: 0.75rem var(
 .trigger { margin-top: 0.6rem; padding: 0.55rem 0.8rem; border-radius: 12px; border: 1px dashed var(--line-strong); display: grid; gap: 0.15rem; color: var(--chalk-soft); }
 .trigger .hand { font-size: 1.25rem; }
 .kind.trade { color: var(--pink); }
+.kind.incident { color: var(--yellow); }
+.scenario-hint { font-size: 0.85rem; color: var(--chalk-faint); margin: -0.4rem 0 0.6rem; }
 
 .foot { text-align: center; padding: 1rem 1.25rem 2rem; max-width: 760px; margin: 0 auto; }
 

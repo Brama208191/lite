@@ -105,7 +105,7 @@ class CrashResumeIT extends PostgresTest {
     @Test
     void anAlertRunKilledRightAfterItsTradeTradesOnce() {
         var task = "ALERT ALT-BTC-1: BTC/USD fell 5.20% in the 1m window ending 14:04:00 UTC (close $61,000.00). "
-                + "Investigate: log it to the alerts notes and email ops@example.com, then place a $500.00 paper hedge trade (buy BTC/USD).";
+                + "Investigate: log it to the alerts notes and page the on-call team, then place a $500.00 paper hedge trade (buy BTC/USD).";
         var runId = runs.create(task, "fake", 8);
         var crashing = new RunDriver(events, leases, models, registry(after("place_trade", () -> {
             throw new SimulatedCrash();

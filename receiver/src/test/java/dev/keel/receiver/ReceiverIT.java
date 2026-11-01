@@ -134,6 +134,20 @@ class ReceiverIT {
     }
 
     @Test
+    void incidentsPageOncePerKey() {
+        var incident = Map.of("severity", "critical", "summary", "[INC-1] engine down", "reference", "INC-1");
+        var first = post("/v1/incidents", "run-i:1:0", incident);
+        var again = post("/v1/incidents", "run-i:1:0", incident);
+        var bad = post("/v1/incidents", "run-i:1:1", Map.of("severity", "panic", "summary", "x", "reference", "INC-2"));
+
+        assertThat(first.getBody().get("id").asText()).startsWith("in_");
+        assertThat(first.getBody().get("paged").asText()).isEqualTo("the on-call engineer");
+        assertThat(again.getHeaders().getFirst("Idempotent-Replayed")).isEqualTo("true");
+        assertThat(bad.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(http.getForObject("/v1/stats?referencePrefix=INC-1", LedgerQueries.Stats.class).effects()).isEqualTo(1);
+    }
+
+    @Test
     void paperTradesAreFilledOncePerKey() {
         var trade = Map.of("symbol", "BTC/USD", "side", "sell", "notional_cents", 50_000, "reference", "ALT-BTC-7");
         var first = post("/v1/trades", "run-t:1:1", trade);

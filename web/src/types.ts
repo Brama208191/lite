@@ -40,7 +40,7 @@ export interface WorkerView {
 
 export interface Effect {
   key: string;
-  kind: "email" | "charge" | "trade";
+  kind: "email" | "charge" | "trade" | "incident";
   reference: string;
   appliedAt: string;
   response: Record<string, any>;

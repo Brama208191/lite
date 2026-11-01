@@ -72,20 +72,21 @@ public class FakeModel implements ModelClient {
         var headline = parsed ? header.group(2) : task;
         var hedge = HEDGE.matcher(task);
         boolean trade = hedge.find();
+        boolean critical = trade || ref.contains("INC-") || ref.contains("DATA-");
         return switch (turn) {
             case 0 -> reply("tool_use",
-                    new Block.Text("Alert " + ref + ": " + headline + ". I'll record it first, then notify the on-call team"
+                    new Block.Text("Alert " + ref + ": " + headline + ". I'll record it first, then page the on-call team"
                             + (trade ? " and hedge the position." : ".")),
                     toolUse(turn, 0, "notes_append", Map.of("key", "alerts", "line", ref + " " + headline)));
             case 1 -> {
-                var email = toolUse(turn, 0, "send_email", Map.of(
-                        "to", "ops@example.com",
-                        "subject", "[" + ref + "] " + headline,
-                        "body", task));
+                var page = toolUse(turn, 0, "page_oncall", Map.of(
+                        "severity", critical ? "critical" : "warning",
+                        "summary", "[" + ref + "] " + headline,
+                        "reference", ref));
                 if (!trade) {
-                    yield reply("tool_use", new Block.Text("Recorded. Emailing ops."), email);
+                    yield reply("tool_use", new Block.Text("Recorded. Paging the on-call team."), page);
                 }
-                yield reply("tool_use", new Block.Text("Recorded. Emailing ops and placing the paper hedge."), email,
+                yield reply("tool_use", new Block.Text("Recorded. Paging the on-call team and placing the paper hedge."), page,
                         toolUse(turn, 1, "place_trade", Map.of(
                                 "symbol", hedge.group(3),
                                 "side", hedge.group(2),
@@ -104,7 +105,7 @@ public class FakeModel implements ModelClient {
         if (errors > 0) {
             return "Alert " + ref + " handled with " + errors + " tool error(s); see the timeline.";
         }
-        return "Alert " + ref + " handled: logged in the alerts notes, ops emailed" + (trade ? ", paper hedge placed." : ".");
+        return "Alert " + ref + " handled: logged in the alerts notes, on-call paged" + (trade ? ", paper hedge placed." : ".");
     }
 
     static String orderId(String task) {

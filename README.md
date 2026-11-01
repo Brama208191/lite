@@ -154,7 +154,7 @@ report lands in `chaos-results/chaos-report.md` and `.json`, with one log file p
 
 ## Dashboard
 
-One page (React + TypeScript): start a run, watch the event log arrive over Server-Sent Events (the API
+One page (React + TypeScript): pick a scenario from a fixed list (an order, a market drop, a small jump, an engine outage; Claude adds an alert summary), start it, watch the event log arrive over Server-Sent Events (the API
 `LISTEN`s on a Postgres trigger), and press **Kill the worker**. The worker halts on its next heartbeat
 with `Runtime.halt(137)`, which skips every `finally` block and shutdown hook just like `kill -9`, and
 leaves its lease behind. A few seconds later the timeline shows another worker taking over with a higher
@@ -175,7 +175,7 @@ Keel Lite can watch a live [Streamlet](https://github.com/Brama208191/streamlet)
 for a simulated crypto market, and turn its price shocks into agent runs:
 
 ```
-Streamlet: ticks → 1-minute windows ──SSE──► Keel API: spike detector ──► run ──► worker: note, email, paper trade
+Streamlet: ticks → 1-minute windows ──SSE──► Keel API: spike detector ──► run ──► worker: note, page on-call, paper trade
 ```
 
 - **Detector.** For each coin it keeps the last 5 one-minute windows. A window starts an alert when it
@@ -187,8 +187,11 @@ Streamlet: ticks → 1-minute windows ──SSE──► Keel API: spike detecto
   same alert twice. Engine outages and verifier mismatches reported by Streamlet become incident runs too.
 - **Guard rails.** A 5-minute cooldown per coin and a cap of 20 alerts an hour, because the demo is public.
   Alert runs use the scripted model unless `KEEL_STREAMLET_MODEL=anthropic`.
-- **`place_trade`** is a third external effect with the same idempotency-key protection as email and
-  payments. Kill the worker right after the trade and the receiver still shows it filled once.
+- **The playbook** logs the alert to the `alerts` notes, opens an incident with a (fake) on-call pager
+  through `page_oncall`, critical for big moves and outages and a warning otherwise, and places the paper
+  hedge with `place_trade`. Both are external effects with the same idempotency-key protection as email
+  and payments, much like a real pager's dedup key. Kill the worker right after the trade and the
+  receiver still shows one page and one fill.
 
 The dashboard shows the feed's state, which runs came from Streamlet, and why each alert fired. A
 **Send a test spike** control pushes a made-up window through the same detector when you do not want to
@@ -224,7 +227,7 @@ runtime/   Spring Boot app, one jar for both roles (KEEL_ROLE=api|worker|all)
   core/      Event, RunState.fold, Decider.decide: pure, no I/O
   store/     EventStore (fenced append), LeaseStore (claim/renew), RunStore, WorkerStore
   model/     ModelClient, FakeModel (scripted), AnthropicModel (Anthropic Java SDK)
-  tools/     send_email, charge_payment, place_trade, notes_append, notes_read, http_fetch
+  tools/     send_email, charge_payment, place_trade, page_oncall, notes_append, notes_read, http_fetch
   streamlet/ live feed watcher, spike detector, alert tasks
   worker/    Worker (claim loop, heartbeats, kill switch), RunDriver (fold → decide → act → append)
   api/       REST + SSE, LISTEN/NOTIFY fan-out

@@ -31,7 +31,7 @@ public final class AlertTasks {
                 .append(spike.previousWindows() > 0
                         ? "The previous " + spike.previousWindows() + " windows moved " + SpikeDetector.percent(spike.baselineBps()) + " on average. "
                         : "")
-                .append("Investigate: log it to the alerts notes and email ops@example.com");
+                .append("Investigate: log it to the alerts notes and page the on-call team");
         boolean hedge = Math.abs(w.changeBps()) >= tradeAboveBps;
         if (hedge) {
             task.append(", then place a $").append(String.format("%,.2f", HEDGE_CENTS / 100.0)).append(" paper hedge trade (")
@@ -62,7 +62,7 @@ public final class AlertTasks {
     public static Alert engineDown(long at, String streamletUrl) {
         var ref = "INC-" + at / 1000;
         var task = "ALERT " + ref + ": the Streamlet engine went down at " + CLOCK.format(Instant.ofEpochMilli(at))
-                + ". Investigate: log it to the alerts notes and email ops@example.com.";
+                + ". Investigate: log it to the alerts notes and page the on-call team.";
         return new Alert(task, "streamlet:engine-down:" + at, Map.of(
                 "type", "engine-down", "ref", ref, "at", at, "simulated", false, "streamletUrl", streamletUrl));
     }
@@ -70,7 +70,7 @@ public final class AlertTasks {
     public static Alert mismatch(long checkedAt, long mismatches, long compared, String streamletUrl) {
         var ref = "DATA-" + checkedAt / 1000;
         var task = "ALERT " + ref + ": Streamlet's verifier found " + mismatches + " of " + compared
-                + " windows that disagree with the reference. Investigate: log it to the alerts notes and email ops@example.com.";
+                + " windows that disagree with the reference. Investigate: log it to the alerts notes and page the on-call team.";
         return new Alert(task, "streamlet:mismatch:" + checkedAt, Map.of(
                 "type", "mismatch", "ref", ref, "mismatches", mismatches, "simulated", false, "streamletUrl", streamletUrl));
     }

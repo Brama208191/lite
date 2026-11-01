@@ -43,6 +43,11 @@ public class ReceiverController {
                                @NotBlank @Size(max = 200) String reference) {
     }
 
+    public record IncidentRequest(@NotBlank @Pattern(regexp = "critical|warning|info") String severity,
+                                  @NotBlank @Size(max = 300) String summary,
+                                  @NotBlank @Size(max = 200) String reference) {
+    }
+
     private final EffectLedger ledger;
     private final LedgerQueries queries;
     private final ReceiverProperties properties;
@@ -78,6 +83,17 @@ public class ReceiverController {
                 "symbol", request.symbol(),
                 "side", request.side(),
                 "notional_cents", request.notionalCents(),
+                "reference", request.reference()));
+    }
+
+    @PostMapping("/incidents")
+    public ResponseEntity<Object> incident(@RequestHeader(name = "Idempotency-Key", required = false) String key,
+                                           @Valid @RequestBody IncidentRequest request) {
+        return handle("incident", key, request.reference(), request, Map.of(
+                "status", "triggered",
+                "severity", request.severity(),
+                "summary", request.summary(),
+                "paged", request.severity().equals("info") ? "nobody, logged only" : "the on-call engineer",
                 "reference", request.reference()));
     }
 

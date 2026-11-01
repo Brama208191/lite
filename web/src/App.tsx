@@ -1,22 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api, streamEvents } from "./api";
 import { money } from "./describe";
+import { SCENARIOS } from "./scenarios";
 import { StreamletPanel, TriggerNote } from "./StreamletPanel";
 import { Timeline } from "./Timeline";
 import type { Effect, Info, RunEvent, RunSummary, WorkerView } from "./types";
-
-const PRESETS: Record<string, string[]> = {
-  fake: [
-    "Process order ORD-1042 for Ada Lovelace",
-    "Process order ORD-2077 for Grace Hopper",
-    "Process order ORD-3141 for Alan Turing",
-  ],
-  anthropic: [
-    "Order ORD-5001: customer cus_ada (ada@example.com) bought a keyboard for $79.00. Log the order in the 'orders' notes, email her a confirmation, then charge her card.",
-    "Read the 'orders' notes and email ops@example.com a one-paragraph summary of today's orders.",
-    "Fetch https://example.com and log its page title to the 'research' notes.",
-  ],
-};
 
 function useHashRun(): [string | null, (id: string) => void] {
   const read = () => new URLSearchParams(window.location.hash.slice(1)).get("run");
@@ -50,12 +38,14 @@ function useDeveloperView(): [boolean, (on: boolean) => void] {
   ];
 }
 
-const KIND_LABELS: Record<Effect["kind"], string> = { email: "email", charge: "card charge", trade: "paper trade" };
+const KIND_LABELS: Record<Effect["kind"], string> = { email: "email", charge: "card charge", trade: "paper trade", incident: "page" };
 
 function effectTitle(effect: Effect) {
   switch (effect.kind) {
     case "charge":
       return `Order ${effect.reference}`;
+    case "incident":
+      return `${effect.response.severity}: ${effect.response.summary}`;
     case "trade":
       return `${effect.response.side} ${money(effect.response.notional_cents, "usd")} of ${effect.response.symbol} for ${effect.reference}`;
     default:
@@ -78,7 +68,7 @@ export function App() {
   const [effects, setEffects] = useState<Effect[]>([]);
   const [connected, setConnected] = useState(false);
   const [model, setModel] = useState("fake");
-  const [task, setTask] = useState(PRESETS.fake[0]);
+  const [scenarioId, setScenarioId] = useState(SCENARIOS[0].id);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<{ text: string; tone: "info" | "bad" } | null>(null);
   const [killedAt, setKilledAt] = useState<number | null>(null);
@@ -141,7 +131,7 @@ export function App() {
     setBusy(true);
     setNotice(null);
     try {
-      const { id } = await api.create(task, model);
+      const { id } = await api.create(scenario.task(), model);
       select(id);
     } catch (e) {
       setNotice({ text: (e as Error).message, tone: "bad" });
@@ -165,6 +155,8 @@ export function App() {
   }
 
   const waiting = killedAt !== null && !terminal;
+  const scenarios = SCENARIOS.filter((s) => !s.claudeOnly || model === "anthropic");
+  const scenario = scenarios.find((s) => s.id === scenarioId) ?? scenarios[0];
 
   return (
     <div className="shell">
@@ -191,23 +183,21 @@ export function App() {
             <h2>Start a run</h2>
             <label className="field">
               <span>Model</span>
-              <select value={model} onChange={(e) => { setModel(e.target.value); setTask(PRESETS[e.target.value][0]); }}>
+              <select value={model} onChange={(e) => { setModel(e.target.value); setScenarioId(SCENARIOS[0].id); }}>
                 <option value="fake">Scripted model (free, always the same)</option>
                 {info?.models.includes("anthropic") && <option value="anthropic">Claude ({info.anthropicModel})</option>}
               </select>
             </label>
             <label className="field">
-              <span>Task</span>
-              <textarea rows={4} value={task} onChange={(e) => setTask(e.target.value)} maxLength={2000} />
+              <span>Scenario</span>
+              <select value={scenario.id} onChange={(e) => setScenarioId(e.target.value)}>
+                {scenarios.map((s) => (
+                  <option key={s.id} value={s.id}>{s.label}</option>
+                ))}
+              </select>
             </label>
-            <div className="presets">
-              {PRESETS[model].map((preset) => (
-                <button key={preset} className="chip" onClick={() => setTask(preset)} title={preset}>
-                  {preset.length > 32 ? `${preset.slice(0, 32)}…` : preset}
-                </button>
-              ))}
-            </div>
-            <button className="primary wide" onClick={start} disabled={busy || !task.trim()}>
+            <p className="scenario-hint">{scenario.hint}</p>
+            <button className="primary wide" onClick={start} disabled={busy}>
               {busy ? "Starting…" : "Start run"}
             </button>
           </section>
@@ -218,7 +208,7 @@ export function App() {
             <h2>Recent runs</h2>
             <ul className="runs">
               {runs.length === 0 && <li className="muted">No runs yet.</li>}
-              {runs.map((r) => (
+              {runs.slice(0, 8).map((r) => (
                 <li key={r.id}>
                   <button className={`run-item ${r.id === selected ? "active" : ""}`} onClick={() => select(r.id)}>
                     <span className="run-task">{r.task}</span>
@@ -293,7 +283,7 @@ export function App() {
                 <section className="panel effects">
                   <h2>At the provider</h2>
                   <p className="muted small">
-                    A separate service standing in for the email and payment companies. It counts every request it gets.
+                    A separate service standing in for the email, payment, pager and broker companies. It counts every request it gets.
                   </p>
                   {effects.length === 0 && <p className="muted">Nothing yet.</p>}
                   <ul>

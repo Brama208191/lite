@@ -70,6 +70,7 @@ public class EffectLedger {
         return switch (kind) {
             case "charge" -> "ch_";
             case "trade" -> "tr_";
+            case "incident" -> "in_";
             default -> "em_";
         };
     }
