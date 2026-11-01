@@ -64,6 +64,9 @@ jobs:
       - name: Build images
         run: docker compose --profile chaos build
 
+      - name: Build the single-container Railway image
+        run: docker build -f deploy/railway.Dockerfile -t keel-railway .
+
       - name: Start Postgres, receiver and API
         run: docker compose up -d postgres receiver api
 

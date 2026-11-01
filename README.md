@@ -239,7 +239,28 @@ deploy/    Dockerfiles and Railway configs
 
 ## Deploy (Railway)
 
-Railway runs this as four services from one repo. No Redis, no Docker-in-Docker.
+### Live demo: one service, about 10 cents a day
+
+The live demo runs everything in a single container to keep hosting cheap (about 380 MB of memory):
+Postgres, the receiver as its own JVM, and Keel with the API and worker in one JVM, all started by
+[`deploy/railway-start.sh`](deploy/railway-start.sh). The script restarts Keel whenever it exits, so the
+dashboard's **Kill the worker** button crashes the whole Keel process; the restarted process takes over
+once the 3-second lease runs out (about 7 seconds in total, mostly JVM start-up) and finishes the run
+from the log without repeating an effect.
+
+1. **New project → Deploy from GitHub repo** and pick this repository. The root
+   [`railway.json`](railway.json) builds [`deploy/railway.Dockerfile`](deploy/railway.Dockerfile).
+2. Optional variables: `KEEL_STREAMLET_URL=https://streamlet-production.up.railway.app` for market alerts,
+   and `ANTHROPIC_API_KEY` to offer Claude.
+3. **Settings → Networking → Generate Domain**, then open it.
+
+The database lives inside the container, so demo runs reset on every redeploy. Nothing else needs
+configuring.
+
+### Scaled layout: separate services
+
+The same jar scales out as an API, any number of workers, a separate receiver and Railway Postgres. This
+is the layout the chaos harness measures (five worker JVMs) and the one in `docker-compose.yml`.
 
 1. **New project → Deploy from GitHub repo**, then add **Postgres** (Database → PostgreSQL).
 2. Create three services from the same repo and point each at its config file under
@@ -264,10 +285,10 @@ Railway runs this as four services from one repo. No Redis, no Docker-in-Docker.
 
 4. In the `worker` service settings, set **Replicas** to 2, so a killed worker's run is taken over by the
    other replica within the lease TTL (3 s) while Railway restarts the killed one (`restartPolicyType:
-   ALWAYS`). One replica also works, but the takeover then waits for the restart.
+   ALWAYS`).
 5. Deploy. Flyway creates the tables on first start (the receiver uses its own `receiver` schema).
 
-Cost notes: every service runs a small JVM (`-XX:TieredStopAtLevel=1`, Serial GC). The fake model is
+Cost notes: every JVM is small (`-XX:TieredStopAtLevel=1`, Serial GC). The fake model is
 free; Claude runs are capped per hour by `KEEL_MAX_ANTHROPIC_RUNS_PER_HOUR` because the demo is public.
 The model defaults to `claude-opus-5-5` at `low` effort (`KEEL_ANTHROPIC_MODEL`, `KEEL_ANTHROPIC_EFFORT`).
 
