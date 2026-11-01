@@ -52,6 +52,11 @@ keel:
       fallbacks: ${KEEL_ANTHROPIC_FALLBACKS:true}
   receiver:
     url: ${KEEL_RECEIVER_URL:http://localhost:8090}
+  streamlet:
+    url: ${KEEL_STREAMLET_URL:}
+    kind: ${KEEL_STREAMLET_KIND:1m}
+    model: ${KEEL_STREAMLET_MODEL:fake}
+    max-alerts-per-hour: ${KEEL_STREAMLET_MAX_ALERTS_PER_HOUR:20}
   api:
     max-runs-per-minute: ${KEEL_MAX_RUNS_PER_MINUTE:60}
     max-anthropic-runs-per-hour: ${KEEL_MAX_ANTHROPIC_RUNS_PER_HOUR:20}

@@ -1,4 +1,4 @@
-import type { Effect, Info, RunEvent, RunSummary, WorkerView } from "./types";
+import type { Effect, Info, RunEvent, RunSummary, StreamletStatus, WorkerView } from "./types";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(path, {
@@ -21,6 +21,9 @@ export const api = {
   kill: (id: string) => request<{ worker: string }>(`/api/runs/${id}/kill`, { method: "POST" }),
   effects: (id: string) => request<{ effects: Effect[] }>(`/api/runs/${id}/effects`),
   workers: () => request<WorkerView[]>("/api/workers"),
+  streamlet: () => request<StreamletStatus>("/api/streamlet"),
+  simulateSpike: (symbol: number, changeBps: number) =>
+    request<{ id: string }>("/api/streamlet/simulate", { method: "POST", body: JSON.stringify({ symbol, changeBps }) }),
 };
 
 export function streamEvents(id: string, onEvent: (event: RunEvent) => void, onState: (open: boolean) => void) {

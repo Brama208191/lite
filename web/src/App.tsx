@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { api, streamEvents } from "./api";
+import { money } from "./describe";
+import { StreamletPanel, TriggerNote } from "./StreamletPanel";
 import { Timeline } from "./Timeline";
 import type { Effect, Info, RunEvent, RunSummary, WorkerView } from "./types";
 
@@ -46,6 +48,19 @@ function useDeveloperView(): [boolean, (on: boolean) => void] {
       }
     },
   ];
+}
+
+const KIND_LABELS: Record<Effect["kind"], string> = { email: "email", charge: "card charge", trade: "paper trade" };
+
+function effectTitle(effect: Effect) {
+  switch (effect.kind) {
+    case "charge":
+      return `Order ${effect.reference}`;
+    case "trade":
+      return `${effect.response.side} ${money(effect.response.notional_cents, "usd")} of ${effect.response.symbol} for ${effect.reference}`;
+    default:
+      return effect.reference.split(" | ")[1] ?? effect.reference;
+  }
 }
 
 function ago(iso: string) {
@@ -197,6 +212,8 @@ export function App() {
             </button>
           </section>
 
+          <StreamletPanel onStarted={select} onError={(text) => setNotice({ text, tone: "bad" })} />
+
           <section className="panel">
             <h2>Recent runs</h2>
             <ul className="runs">
@@ -207,6 +224,7 @@ export function App() {
                     <span className="run-task">{r.task}</span>
                     <span className="run-meta">
                       <span className={`status ${r.status.toLowerCase()}`}>{r.status.toLowerCase()}</span>
+                      {r.source !== "manual" && <span className="source">{r.source === "streamlet" ? "alert" : "test"}</span>}
                       {ago(r.createdAt)}
                     </span>
                   </button>
@@ -240,6 +258,7 @@ export function App() {
                     {run?.holder ? <>running on <strong>{run.holder}</strong></> : terminal ? "finished" : "waiting for a worker"}
                     {!connected && " · reconnecting…"}
                   </p>
+                  {run?.trigger && <TriggerNote trigger={run.trigger} source={run.source} />}
                 </div>
                 <button className="danger" onClick={kill} disabled={terminal || !run?.holder}>
                   Kill the worker
@@ -280,8 +299,8 @@ export function App() {
                   <ul>
                     {effects.map((effect) => (
                       <li key={effect.key}>
-                        <span className={`kind ${effect.kind}`}>{effect.kind === "charge" ? "card charge" : "email"}</span>
-                        <p>{effect.kind === "charge" ? `Order ${effect.reference}` : effect.reference.split(" | ")[1] ?? effect.reference}</p>
+                        <span className={`kind ${effect.kind}`}>{KIND_LABELS[effect.kind]}</span>
+                        <p>{effectTitle(effect)}</p>
                         <p className="small">
                           happened <strong className="once">once</strong>
                           {effect.requests > 1

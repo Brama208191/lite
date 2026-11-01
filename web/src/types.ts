@@ -22,6 +22,8 @@ export interface RunSummary {
   task: string;
   model: string;
   status: "PENDING" | "RUNNING" | "COMPLETED" | "FAILED";
+  source: "manual" | "streamlet" | "streamlet-test";
+  trigger: Trigger | null;
   createdAt: string;
   updatedAt: string;
   events: number;
@@ -38,7 +40,7 @@ export interface WorkerView {
 
 export interface Effect {
   key: string;
-  kind: "email" | "charge";
+  kind: "email" | "charge" | "trade";
   reference: string;
   appliedAt: string;
   response: Record<string, any>;
@@ -51,4 +53,33 @@ export interface Info {
   anthropicModel: string;
   leaseTtlMs: number;
   stableKeys: boolean;
+}
+
+export interface Trigger {
+  type: "spike" | "engine-down" | "mismatch";
+  ref: string;
+  label?: string;
+  kind?: string;
+  changeBps?: number;
+  baselineBps?: number;
+  reason?: string;
+  hedge?: boolean;
+  simulated: boolean;
+  streamletUrl: string;
+}
+
+export interface StreamletStatus {
+  enabled: boolean;
+  url: string;
+  kind: string;
+  connected: boolean;
+  lastEventAt: string | null;
+  windowsSeen: number;
+  alertsLastHour: number;
+  maxAlertsPerHour: number;
+  lastError: string | null;
+  rule: { history: number; ratio: number; minBps: number; absoluteBps: number };
+  tradeAboveBps: number;
+  cooldownSeconds: number;
+  symbols: { id: number; label: string }[];
 }

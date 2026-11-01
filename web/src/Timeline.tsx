@@ -68,7 +68,7 @@ function Summary({ event, previous, names }: { event: RunEvent; previous?: RunEv
       return (
         <p className="summary">
           {describeStart(p.name)}
-          {p.attempt > 1 && <span className="tag warn">sent again after the crash, with the same key</span>}
+          {p.attempt > 1 && <span className="tag warn">attempt {p.attempt}, same key, so it cannot happen twice</span>}
         </p>
       );
     case "TOOL_COMPLETED":

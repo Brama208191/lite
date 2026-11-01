@@ -133,6 +133,20 @@ class ReceiverIT {
         assertThat(effects.get(0).get("response").get("status").asText()).isEqualTo("sent");
     }
 
+    @Test
+    void paperTradesAreFilledOncePerKey() {
+        var trade = Map.of("symbol", "BTC/USD", "side", "sell", "notional_cents", 50_000, "reference", "ALT-BTC-7");
+        var first = post("/v1/trades", "run-t:1:1", trade);
+        var again = post("/v1/trades", "run-t:1:1", trade);
+        var bad = post("/v1/trades", "run-t:1:2", Map.of("symbol", "BTC", "side", "hold", "notional_cents", 5, "reference", "x"));
+
+        assertThat(first.getBody().get("id").asText()).startsWith("tr_");
+        assertThat(first.getBody().get("paper").asBoolean()).isTrue();
+        assertThat(again.getBody().get("id").asText()).isEqualTo(first.getBody().get("id").asText());
+        assertThat(bad.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(http.getForObject("/v1/stats?referencePrefix=ALT-BTC-7", LedgerQueries.Stats.class).effects()).isEqualTo(1);
+    }
+
     private static Map<String, Object> charge(String reference, long amount) {
         return Map.of("customer", "cus_1", "amount_cents", amount, "currency", "usd", "reference", reference);
     }

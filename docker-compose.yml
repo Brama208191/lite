@@ -48,6 +48,10 @@ services:
       KEEL_MAX_RUNS_PER_MINUTE: ${KEEL_MAX_RUNS_PER_MINUTE:-100000}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       KEEL_ANTHROPIC_MODEL: ${KEEL_ANTHROPIC_MODEL:-claude-opus-5-5}
+      KEEL_STREAMLET_URL: ${KEEL_STREAMLET_URL:-}
+      KEEL_STREAMLET_MODEL: ${KEEL_STREAMLET_MODEL:-fake}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - "8080:8080"
     depends_on:

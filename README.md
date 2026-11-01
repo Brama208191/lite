@@ -169,6 +169,41 @@ docker compose up --build
 Then open http://localhost:8080. The demo workers use a slower fake model (1.5 to 2.5 s per turn) so
 there is time to press the button. Set `ANTHROPIC_API_KEY` in `.env` to add Claude as a model choice.
 
+## Market alerts from Streamlet
+
+Keel Lite can watch a live [Streamlet](https://github.com/Brama208191/streamlet) engine, my stream processor
+for a simulated crypto market, and turn its price shocks into agent runs:
+
+```
+Streamlet: ticks → 1-minute windows ──SSE──► Keel API: spike detector ──► run ──► worker: note, email, paper trade
+```
+
+- **Detector.** For each coin it keeps the last 5 one-minute windows. A window starts an alert when it
+  moves at least 1.5%, or at least 1% and 4× the coin's average move over those 5 windows (so a 1.2% jump
+  out of a flat market counts, a 1.2% move in an already choppy one does not). Moves of 3% or more also
+  ask the agent for a $500 paper hedge trade against the move.
+- **One run per trigger.** Each alert has a fixed key (`streamlet:spike:<coin>:1m:<window start>`) with a
+  unique index, so a reconnect that replays events, a restart, or a second API replica never starts the
+  same alert twice. Engine outages and verifier mismatches reported by Streamlet become incident runs too.
+- **Guard rails.** A 5-minute cooldown per coin and a cap of 20 alerts an hour, because the demo is public.
+  Alert runs use the scripted model unless `KEEL_STREAMLET_MODEL=anthropic`.
+- **`place_trade`** is a third external effect with the same idempotency-key protection as email and
+  payments. Kill the worker right after the trade and the receiver still shows it filled once.
+
+The dashboard shows the feed's state, which runs came from Streamlet, and why each alert fired. A
+**Send a test spike** control pushes a made-up window through the same detector when you do not want to
+wait for the market.
+
+Run both locally:
+
+```bash
+docker run -d --name streamlet -p 8099:8080 -e PORT=8080 $(docker build -q -f deploy/railway.Dockerfile /path/to/streamlet)
+```
+
+```bash
+KEEL_STREAMLET_URL=http://host.docker.internal:8099 docker compose up --build
+```
+
 ## Running the tests
 
 Java and Maven are only needed inside Docker:
@@ -189,7 +224,8 @@ runtime/   Spring Boot app, one jar for both roles (KEEL_ROLE=api|worker|all)
   core/      Event, RunState.fold, Decider.decide: pure, no I/O
   store/     EventStore (fenced append), LeaseStore (claim/renew), RunStore, WorkerStore
   model/     ModelClient, FakeModel (scripted), AnthropicModel (Anthropic Java SDK)
-  tools/     send_email, charge_payment, notes_append, notes_read, http_fetch
+  tools/     send_email, charge_payment, place_trade, notes_append, notes_read, http_fetch
+  streamlet/ live feed watcher, spike detector, alert tasks
   worker/    Worker (claim loop, heartbeats, kill switch), RunDriver (fold → decide → act → append)
   api/       REST + SSE, LISTEN/NOTIFY fan-out
 receiver/  the fake email and payment provider, with its own schema and an idempotency ledger
@@ -220,7 +256,7 @@ Railway runs this as four services from one repo. No Redis, no Docker-in-Docker.
    | Service | Variables |
    |---|---|
    | `receiver` | `PORT=8090` |
-   | `api` | `KEEL_ROLE=api`, `KEEL_RECEIVER_URL=http://${{receiver.RAILWAY_PRIVATE_DOMAIN}}:8090`, `KEEL_MAX_RUNS_PER_MINUTE=30`, optionally `ANTHROPIC_API_KEY` and `KEEL_MAX_ANTHROPIC_RUNS_PER_HOUR=20` |
+   | `api` | `KEEL_ROLE=api`, `KEEL_RECEIVER_URL=http://${{receiver.RAILWAY_PRIVATE_DOMAIN}}:8090`, `KEEL_MAX_RUNS_PER_MINUTE=30`, `KEEL_STREAMLET_URL=https://streamlet-production.up.railway.app`, optionally `ANTHROPIC_API_KEY` and `KEEL_MAX_ANTHROPIC_RUNS_PER_HOUR=20` |
    | `worker` | `KEEL_ROLE=worker`, `SPRING_MAIN_WEB_APPLICATION_TYPE=none`, `KEEL_RECEIVER_URL=http://${{receiver.RAILWAY_PRIVATE_DOMAIN}}:8090`, `KEEL_FAKE_MIN_LATENCY=1500ms`, `KEEL_FAKE_MAX_LATENCY=2500ms`, optionally `ANTHROPIC_API_KEY` |
 
 4. In the `worker` service settings, set **Replicas** to 2, so a killed worker's run is taken over by the
@@ -244,6 +280,9 @@ The model defaults to `claude-opus-5-5` at `low` effort (`KEEL_ANTHROPIC_MODEL`,
 | `KEEL_RECEIVER_URL` | `http://localhost:8090` | where effect tools send requests |
 | `ANTHROPIC_API_KEY` | empty | enables the Claude adapter |
 | `RECEIVER_FAIL_AFTER_COMMIT_RATE` | `0` | receiver: answer 503 after committing the effect |
+| `KEEL_STREAMLET_URL` | empty | a Streamlet base URL to watch for price shocks; empty turns alerts off |
+| `KEEL_STREAMLET_MODEL` | `fake` | model for alert runs (`fake` or `anthropic`) |
+| `KEEL_STREAMLET_MAX_ALERTS_PER_HOUR` | `20` | cap on alert runs (and on test spikes) per hour |
 
 ## Limits
 

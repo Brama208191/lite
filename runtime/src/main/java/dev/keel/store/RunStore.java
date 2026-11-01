@@ -1,5 +1,6 @@
 package dev.keel.store;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import dev.keel.core.EventType;
 import dev.keel.core.Json;
 import dev.keel.core.Payloads;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class RunStore {
 
     public record RunSummary(UUID id, String task, String model, String status, Instant createdAt, Instant updatedAt,
-                             int events, String holder) {
+                             int events, String holder, String source, JsonNode trigger) {
     }
 
     private static final RowMapper<RunSummary> SUMMARY = (rs, i) -> new RunSummary(
@@ -29,10 +30,12 @@ public class RunStore {
             rs.getTimestamp("created_at").toInstant(),
             rs.getTimestamp("updated_at").toInstant(),
             rs.getInt("events"),
-            rs.getString("holder"));
+            rs.getString("holder"),
+            rs.getString("source"),
+            rs.getString("trigger") == null ? null : Json.parse(rs.getString("trigger")));
 
     private static final String SELECT_SUMMARY = """
-            select r.id, r.task, r.model, r.status, r.created_at, r.updated_at,
+            select r.id, r.task, r.model, r.status, r.created_at, r.updated_at, r.source, r.trigger,
                    (select count(*) from events e where e.run_id = r.id) as events,
                    case when l.expires_at > clock_timestamp() then l.worker_id end as holder
             from runs r join leases l on l.run_id = r.id
@@ -47,16 +50,27 @@ public class RunStore {
     }
 
     public UUID create(String task, String model, int maxTurns) {
+        return create(task, model, maxTurns, "manual", null, null).orElseThrow();
+    }
+
+    public Optional<UUID> create(String task, String model, int maxTurns, String source, String triggerKey, Object trigger) {
         var id = UUID.randomUUID();
-        tx.executeWithoutResult(status -> {
-            jdbc.update("insert into runs (id, task, model, status) values (?, ?, ?, 'PENDING')", id, task, model);
+        return tx.execute(status -> {
+            var inserted = jdbc.update("""
+                    insert into runs (id, task, model, status, source, trigger_key, trigger)
+                    values (?, ?, ?, 'PENDING', ?, ?, ?::jsonb)
+                    on conflict (trigger_key) where trigger_key is not null do nothing
+                    """, id, task, model, source, triggerKey, trigger == null ? null : Json.write(trigger));
+            if (inserted == 0) {
+                return Optional.<UUID>empty();
+            }
             jdbc.update("insert into leases (run_id) values (?)", id);
             jdbc.update("""
                     insert into events (run_id, seq, type, payload, lease_token, worker_id)
                     values (?, 1, ?, ?::jsonb, 0, null)
                     """, id, EventType.RUN_CREATED.name(), Json.write(new Payloads.RunCreated(task, model, maxTurns)));
+            return Optional.of(id);
         });
-        return id;
     }
 
     public List<RunSummary> recent(int limit) {
@@ -71,5 +85,10 @@ public class RunStore {
         return jdbc.queryForObject(
                 "select count(*) from runs where created_at > ? and (cast(? as text) is null or model = ?)",
                 Integer.class, Timestamp.from(since), model, model);
+    }
+
+    public int createdFromSourceSince(Instant since, String source) {
+        return jdbc.queryForObject("select count(*) from runs where created_at > ? and source = ?",
+                Integer.class, Timestamp.from(since), source);
     }
 }

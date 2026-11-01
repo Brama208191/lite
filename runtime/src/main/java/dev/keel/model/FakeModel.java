@@ -17,6 +17,8 @@ public class FakeModel implements ModelClient {
 
     private static final Logger log = LoggerFactory.getLogger("keel.model");
     private static final Pattern ORDER = Pattern.compile("ORD-[A-Za-z0-9-]+");
+    private static final Pattern ALERT = Pattern.compile("^ALERT (\\S+): ([^.]+(?:\\.\\d+[^.]*)*)\\.");
+    private static final Pattern HEDGE = Pattern.compile("place a \\$([\\d,.]+) paper hedge trade \\((buy|sell) ([A-Z]+/USD)\\)");
 
     private final Duration minLatency;
     private final Duration maxLatency;
@@ -40,6 +42,9 @@ public class FakeModel implements ModelClient {
     }
 
     static ModelReply script(String task, int turn, ModelRequest request) {
+        if (task != null && task.startsWith("ALERT ")) {
+            return alertScript(task, turn, request);
+        }
         var order = orderId(task);
         return switch (turn) {
             case 0 -> reply("tool_use",
@@ -58,6 +63,48 @@ public class FakeModel implements ModelClient {
                             "reference", order)));
             default -> reply("end_turn", new Block.Text(summary(order, request)));
         };
+    }
+
+    static ModelReply alertScript(String task, int turn, ModelRequest request) {
+        var header = ALERT.matcher(task);
+        boolean parsed = header.find();
+        var ref = parsed ? header.group(1) : "ALT-" + Integer.toHexString(Math.abs(task.hashCode()));
+        var headline = parsed ? header.group(2) : task;
+        var hedge = HEDGE.matcher(task);
+        boolean trade = hedge.find();
+        return switch (turn) {
+            case 0 -> reply("tool_use",
+                    new Block.Text("Alert " + ref + ": " + headline + ". I'll record it first, then notify the on-call team"
+                            + (trade ? " and hedge the position." : ".")),
+                    toolUse(turn, 0, "notes_append", Map.of("key", "alerts", "line", ref + " " + headline)));
+            case 1 -> {
+                var email = toolUse(turn, 0, "send_email", Map.of(
+                        "to", "ops@example.com",
+                        "subject", "[" + ref + "] " + headline,
+                        "body", task));
+                if (!trade) {
+                    yield reply("tool_use", new Block.Text("Recorded. Emailing ops."), email);
+                }
+                yield reply("tool_use", new Block.Text("Recorded. Emailing ops and placing the paper hedge."), email,
+                        toolUse(turn, 1, "place_trade", Map.of(
+                                "symbol", hedge.group(3),
+                                "side", hedge.group(2),
+                                "notional_cents", Math.round(Double.parseDouble(hedge.group(1).replace(",", "")) * 100),
+                                "reference", ref)));
+            }
+            default -> reply("end_turn", new Block.Text(alertSummary(ref, trade, request)));
+        };
+    }
+
+    private static String alertSummary(String ref, boolean trade, ModelRequest request) {
+        var errors = request.turns().stream()
+                .flatMap(t -> t.results().values().stream())
+                .filter(r -> r.isError())
+                .count();
+        if (errors > 0) {
+            return "Alert " + ref + " handled with " + errors + " tool error(s); see the timeline.";
+        }
+        return "Alert " + ref + " handled: logged in the alerts notes, ops emailed" + (trade ? ", paper hedge placed." : ".");
     }
 
     static String orderId(String task) {

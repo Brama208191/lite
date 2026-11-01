@@ -67,7 +67,11 @@ public class EffectLedger {
     }
 
     private static String idPrefix(String kind) {
-        return kind.equals("charge") ? "ch_" : "em_";
+        return switch (kind) {
+            case "charge" -> "ch_";
+            case "trade" -> "tr_";
+            default -> "em_";
+        };
     }
 
     private String write(Object value) {

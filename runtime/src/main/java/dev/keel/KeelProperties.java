@@ -14,7 +14,25 @@ public record KeelProperties(
         @DefaultValue Model model,
         @DefaultValue Receiver receiver,
         @DefaultValue Tools tools,
-        @DefaultValue Api api) {
+        @DefaultValue Api api,
+        @DefaultValue Streamlet streamlet) {
+
+    public record Streamlet(
+            @DefaultValue("") String url,
+            @DefaultValue("1m") String kind,
+            @DefaultValue("5") int history,
+            @DefaultValue("4.0") double ratio,
+            @DefaultValue("100") int minBps,
+            @DefaultValue("150") int absoluteBps,
+            @DefaultValue("300") int tradeAboveBps,
+            @DefaultValue("5m") Duration cooldown,
+            @DefaultValue("20") int maxAlertsPerHour,
+            @DefaultValue("fake") String model) {
+
+        public boolean enabled() {
+            return !url.isBlank();
+        }
+    }
 
     public record Worker(
             @DefaultValue("") String id,

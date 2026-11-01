@@ -12,6 +12,7 @@ import dev.keel.store.LeaseStore;
 import dev.keel.store.RunStore;
 import dev.keel.support.CountingModel;
 import dev.keel.support.PostgresTest;
+import dev.keel.support.StubReceiver;
 import dev.keel.tools.Tool;
 import dev.keel.tools.ToolInvocation;
 import dev.keel.tools.ToolRegistry;
@@ -102,6 +103,28 @@ class CrashResumeIT extends PostgresTest {
     }
 
     @Test
+    void anAlertRunKilledRightAfterItsTradeTradesOnce() {
+        var task = "ALERT ALT-BTC-1: BTC/USD fell 5.20% in the 1m window ending 14:04:00 UTC (close $61,000.00). "
+                + "Investigate: log it to the alerts notes and email ops@example.com, then place a $500.00 paper hedge trade (buy BTC/USD).";
+        var runId = runs.create(task, "fake", 8);
+        var crashing = new RunDriver(events, leases, models, registry(after("place_trade", () -> {
+            throw new SimulatedCrash();
+        })), properties);
+        var first = leases.claim("w-a", TTL).orElseThrow();
+        assertThatThrownBy(() -> crashing.drive(first, () -> true)).isInstanceOf(SimulatedCrash.class);
+
+        expireLease(runId);
+        var second = leases.claim("w-b", TTL).orElseThrow();
+        assertThat(driver.drive(second, () -> true)).isEqualTo(RunDriver.Outcome.COMPLETED);
+
+        var trades = RECEIVER.requests().stream().filter(r -> r.path().equals("/v1/trades")).toList();
+        assertThat(trades).hasSize(2).extracting(StubReceiver.Request::key).containsOnly(runId + ":1:1");
+        assertThat(RECEIVER.effectsFor(runId.toString())).isEqualTo(2);
+        assertThat(jdbc.queryForObject("select count(*) from notes where key = 'alerts' and line like 'ALT-BTC-1 %'", Integer.class))
+                .isEqualTo(1);
+    }
+
+    @Test
     void pausedZombieIsFencedAfterAnotherWorkerTakesOver() throws Exception {
         var runId = runs.create("Process order ORD-102 for Ada", "fake", 8);
         var paused = new CountDownLatch(1);
@@ -145,7 +168,7 @@ class CrashResumeIT extends PostgresTest {
     @Test
     void withoutStableKeysTheSameCrashChargesTwice() {
         var unstable = new KeelProperties(properties.worker(), new KeelProperties.Idempotency(false), properties.chaos(),
-                properties.model(), properties.receiver(), properties.tools(), properties.api());
+                properties.model(), properties.receiver(), properties.tools(), properties.api(), properties.streamlet());
         var runId = runs.create("Process order ORD-104 for Ada", "fake", 8);
         var crashing = new RunDriver(events, leases, models, registry(after("charge_payment", () -> {
             throw new SimulatedCrash();

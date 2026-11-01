@@ -42,7 +42,7 @@ public class ReceiverClient {
                 if (status >= 200 && status < 300) {
                     return ToolResult.ok(response.body());
                 }
-                if (status == 400 || status == 422) {
+                if (status >= 400 && status < 500 && status != 408 && status != 409 && status != 425 && status != 429) {
                     return ToolResult.error("Receiver rejected the request (" + status + "): " + response.body());
                 }
                 last = new IOException("Receiver answered " + status);

@@ -1,6 +1,6 @@
 type Input = Record<string, any>;
 
-function money(cents: number, currency: string) {
+export function money(cents: number, currency: string) {
   const amount = (Number(cents) / 100).toFixed(2);
   return currency?.toLowerCase() === "usd" ? `$${amount}` : `${amount} ${String(currency ?? "").toUpperCase()}`;
 }
@@ -26,6 +26,8 @@ export function describeCall(name: string, input: Input): string {
       return `Read the ${input.key} notes`;
     case "http_fetch":
       return `Fetch ${host(input.url)}`;
+    case "place_trade":
+      return `${input.side === "sell" ? "Sell" : "Buy"} ${money(input.notional_cents, "usd")} of ${input.symbol} (paper trade) for ${input.reference}`;
     default:
       return `Use ${name.replace(/_/g, " ")}`;
   }
@@ -43,6 +45,8 @@ export function describeStart(name: string): string {
       return "Reading notes";
     case "http_fetch":
       return "Fetching the page";
+    case "place_trade":
+      return "Placing the trade";
     default:
       return `Running ${name.replace(/_/g, " ")}`;
   }
@@ -61,6 +65,9 @@ export function describeResult(name: string | undefined, content: string, isErro
   if (parsed && typeof parsed === "object") {
     if (name === "charge_payment" || parsed.id?.startsWith?.("ch_")) {
       return `Card charged ${money(parsed.amount_cents, parsed.currency)}, receipt ${parsed.id}`;
+    }
+    if (name === "place_trade" || parsed.id?.startsWith?.("tr_")) {
+      return `Paper trade filled: ${parsed.side} ${money(parsed.notional_cents, "usd")} of ${parsed.symbol}, ticket ${parsed.id}`;
     }
     if (name === "send_email" || parsed.id?.startsWith?.("em_")) {
       return `Email delivered, message ${parsed.id}`;

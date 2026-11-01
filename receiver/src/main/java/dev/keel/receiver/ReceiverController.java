@@ -37,6 +37,12 @@ public class ReceiverController {
                                 @NotBlank @Size(max = 200) String reference) {
     }
 
+    public record TradeRequest(@NotBlank @Pattern(regexp = "[A-Z]{2,6}/USD") String symbol,
+                               @NotBlank @Pattern(regexp = "buy|sell") String side,
+                               @JsonProperty("notional_cents") @NotNull @Min(100) @Max(1_000_000) Long notionalCents,
+                               @NotBlank @Size(max = 200) String reference) {
+    }
+
     private final EffectLedger ledger;
     private final LedgerQueries queries;
     private final ReceiverProperties properties;
@@ -60,6 +66,18 @@ public class ReceiverController {
                 "status", "succeeded",
                 "amount_cents", request.amountCents(),
                 "currency", request.currency(),
+                "reference", request.reference()));
+    }
+
+    @PostMapping("/trades")
+    public ResponseEntity<Object> trade(@RequestHeader(name = "Idempotency-Key", required = false) String key,
+                                        @Valid @RequestBody TradeRequest request) {
+        return handle("trade", key, request.reference(), request, Map.of(
+                "status", "filled",
+                "paper", true,
+                "symbol", request.symbol(),
+                "side", request.side(),
+                "notional_cents", request.notionalCents(),
                 "reference", request.reference()));
     }
 
